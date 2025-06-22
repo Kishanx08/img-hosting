@@ -1,13 +1,13 @@
 # Image Hosting API for ShareX
 
-This is a simple image hosting API that can be used with ShareX for uploading images. It uses Cloudinary for image storage and can be deployed to Heroku.
+This is a simple image hosting API that can be used with ShareX for uploading images. It uses local storage for image storage and can be deployed to any server, including Google Cloud VM.
 
 ## Features
 
 - Image upload endpoint with authentication
-- Cloudinary integration for reliable image storage
+- Local storage for uploaded images
 - CORS enabled
-- Ready for Heroku deployment
+- Ready for deployment on any server
 - ShareX compatible
 
 ## Setup
@@ -17,7 +17,7 @@ This is a simple image hosting API that can be used with ShareX for uploading im
    ```bash
    npm install
    ```
-3. Create a `.env` file based on `.env.example` and fill in your Cloudinary credentials and upload secret
+3. Create a `.env` file based on `.env.example` and fill in your upload secret and (optionally) BASE_URL
 4. Start the server:
    ```bash
    npm start
@@ -38,28 +38,14 @@ This is a simple image hosting API that can be used with ShareX for uploading im
      ```
 4. Test the connection to ensure it works
 
-## Heroku Deployment
+## Deployment
 
-1. Create a new Heroku app
-2. Set the environment variables in Heroku:
-   ```bash
-   heroku config:set CLOUDINARY_CLOUD_NAME=your_cloud_name
-   heroku config:set CLOUDINARY_API_KEY=your_api_key
-   heroku config:set CLOUDINARY_API_SECRET=your_api_secret
-   heroku config:set UPLOAD_SECRET=your_secret_key
-   ```
-3. Deploy to Heroku:
-   ```bash
-   git push heroku main
-   ```
+You can deploy this server to any VM or hosting provider (e.g., Google Cloud VM, DigitalOcean, etc.). Make sure the `/uploads` directory exists and is writable.
 
-## Environment Variables
-
-- `CLOUDINARY_CLOUD_NAME`: Your Cloudinary cloud name
-- `CLOUDINARY_API_KEY`: Your Cloudinary API key
-- `CLOUDINARY_API_SECRET`: Your Cloudinary API secret
-- `PORT`: Server port (default: 3000)
+Set the environment variables as needed:
 - `UPLOAD_SECRET`: Secret key for authenticating uploads
+- `PORT`: Server port (default: 3000)
+- `BASE_URL`: (Optional) The base URL for generating image links
 
 ## API Endpoints
 
@@ -76,16 +62,6 @@ Response:
 ```json
 {
   "success": true,
-  "url": "https://res.cloudinary.com/..."
-}
-```
-
-### GET /health
-Health check endpoint.
-
-Response:
-```json
-{
-  "status": "OK"
+  "url": "http://your-api-url/uploads/your_image.jpg"
 }
 ```

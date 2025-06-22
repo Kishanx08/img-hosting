@@ -23,7 +23,7 @@ const authenticate = (req, res, next) => {
   next();
 };
 
-// Remove Cloudinary and use local storage
+// Use local storage for uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, path.join(__dirname, '../uploads'));
