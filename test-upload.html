@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KishanX08 - Premium Image Hosting</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.15;
+            background-image: 
+                linear-gradient(rgba(0, 255, 157, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 157, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #00ff9d;
+            border-radius: 50%;
+            animation: particleFloat 15s linear infinite;
+        }
+        @keyframes particleFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) translateX(0);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-10vh) translateX(100px);
+            }
+        }
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(40px);
+            pointer-events: none;
+            z-index: -1;
+        }
+        .orb1 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 255, 157, 0.3) 0%, transparent 70%);
+            top: 10%;
+            right: 10%;
+            animation: orbFloat1 8s ease-in-out infinite;
+        }
+        .orb2 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 0, 157, 0.2) 0%, transparent 70%);
+            bottom: 20%;
+            left: 10%;
+            animation: orbFloat2 12s ease-in-out infinite;
+        }
+        .orb3 {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(0, 157, 255, 0.25) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            animation: orbFloat3 10s ease-in-out infinite;
+        }
+        @keyframes orbFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-50px, -100px) scale(1.2); }
+        }
+        @keyframes orbFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(100px, -50px) scale(0.8); }
+        }
+        @keyframes orbFloat3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-80px, 60px) scale(1.1); }
+            66% { transform: translate(80px, -60px) scale(0.9); }
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 60px 0 40px;
+        }
+        .logo {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        .logo::before {
+            content: 'KishanX08';
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(45deg, #00ff9d, #00b8ff, #ff006e);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: logoGradient 4s ease-in-out infinite;
+        }
+        .logo::after {
+            content: 'KishanX08';
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: rgba(255, 255, 255, 0.1);
+            z-index: -1;
+            filter: blur(10px);
+        }
+        @keyframes logoGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .tagline {
+            font-size: 1.1rem;
+            color: #888;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .upload-zone {
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px dashed rgba(0, 255, 157, 0.3);
+            border-radius: 24px;
+            padding: 80px 40px;
+            text-align: center;
+            margin-bottom: 60px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            backdrop-filter: blur(20px);
+        }
+        .upload-zone::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 24px;
+            padding: 2px;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 157, 0.3), transparent);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .upload-zone:hover::before {
+            opacity: 1;
+        }
+        .upload-zone:hover {
+            transform: translateY(-8px);
+            border-color: #00ff9d;
+            box-shadow: 0 20px 40px rgba(0, 255, 157, 0.1);
+        }
+        .upload-zone.dragover {
+            border-color: #00ff9d;
+            background: rgba(0, 255, 157, 0.05);
+            transform: scale(1.02);
+        }
+        .upload-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #00ff9d, #00b8ff);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            animation: iconBounce 3s ease-in-out infinite;
+        }
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .upload-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+        .upload-subtitle {
+            color: #888;
+            margin-bottom: 40px;
+            font-size: 1rem;
+        }
+        .upload-btn {
+            background: linear-gradient(135deg, #00ff9d, #00b8ff);
+            border: none;
+            padding: 16px 48px;
+            border-radius: 50px;
+            color: #000;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .upload-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+        .upload-btn:hover::before {
+            left: 100%;
+        }
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 255, 157, 0.4);
+        }
+        .file-input {
+            display: none;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #00ff9d, #00b8ff, #ff006e);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 157, 0.3);
+        }
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #00ff9d;
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .stat-label {
+            color: #888;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        .image-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: cardSlideIn 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        @keyframes cardSlideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .image-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 255, 157, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+        .image-preview {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .image-card:hover .image-preview {
+            transform: scale(1.02);
+        }
+        .image-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .image-name {
+            font-weight: 600;
+            color: #ffffff;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 0.95rem;
+        }
+        .image-size {
+            color: #888;
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 10px 18px;
+            border-radius: 12px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .action-btn:hover {
+            background: #00ff9d;
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 255, 157, 0.3);
+        }
+        .action-btn.delete:hover {
+            background: #ff006e;
+            color: #fff;
+            box-shadow: 0 8px 16px rgba(255, 0, 110, 0.3);
+        }
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin: 30px 0;
+            overflow: hidden;
+            display: none;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff9d, #00b8ff);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+            position: relative;
+        }
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            animation: progressShine 1.5s ease-in-out infinite;
+        }
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid #00ff9d;
+            color: #00ff9d;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            transform: translateX(400px);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .notification.show {
+            transform: translateX(0);
+        }
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.8rem;
+            }
+            .upload-zone {
+                padding: 60px 30px;
+            }
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+    <div class="particles" id="particles"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="container">
+        <header class="header">
+            <h1 class="logo">KishanX08</h1>
+            <p class="tagline">Premium Image Hosting Platform</p>
+        </header>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalImages">0</div>
+                <div class="stat-label">Images Hosted</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalSize">0 MB</div>
+                <div class="stat-label">Storage Used</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="uploadTime">0ms</div>
+                <div class="stat-label">Avg Upload Time</div>
+            </div>
+        </div>
+        <div class="upload-zone" id="uploadZone">
+            <div class="upload-icon">📤</div>
+            <h2 class="upload-title">Drop files to upload</h2>
+            <p class="upload-subtitle">Supports JPG, PNG, GIF, WebP up to 10MB each</p>
+            <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                Select Files
+            </button>
+            <input type="file" id="fileInput" class="file-input" accept="image/*">
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+        <div class="gallery" id="gallery"></div>
+    </div>
+    <div class="notification" id="notification"></div>
+    <script>
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        const gallery = document.getElementById('gallery');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const notification = document.getElementById('notification');
+        let images = [];
+        let totalSize = 0;
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        function showProgress() {
+            progressContainer.style.display = 'block';
+            progressBar.style.width = '0%';
+        }
+        function updateProgress(percent) {
+            progressBar.style.width = percent + '%';
+        }
+        function hideProgress() {
+            progressContainer.style.display = 'none';
+        }
+        function updateStats(uploadTime = 0) {
+            document.getElementById('totalImages').textContent = images.length;
+            document.getElementById('totalSize').textContent = formatFileSize(totalSize);
+            if (uploadTime > 0) {
+                document.getElementById('uploadTime').textContent = uploadTime + 'ms';
+            }
+        }
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
+        function createImageCard(image) {
+            const card = document.createElement('div');
+            card.className = 'image-card';
+            card.innerHTML = `
+                <img src="${image.url}" alt="${image.name}" class="image-preview">
+                <div class="image-details">
+                    <span class="image-name">${image.name}</span>
+                    <span class="image-size">${formatFileSize(image.size)}</span>
+                </div>
+                <div class="actions">
+                    <button class="action-btn" onclick="navigator.clipboard.writeText('${image.url}').then(()=>showNotification('Image URL copied!'))">Copy</button>
+                    <button class="action-btn" onclick="window.open('${image.url}','_blank')">Open</button>
+                </div>
+            `;
+            return card;
+        }
+        function renderGallery() {
+            gallery.innerHTML = '';
+            images.forEach((image, index) => {
+                const imageCard = createImageCard(image);
+                imageCard.style.animationDelay = (index * 0.1) + 's';
+                gallery.appendChild(imageCard);
+            });
+        }
+        // Drag and drop
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('dragover');
+        });
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('dragover');
+        });
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+            if (files.length > 0) {
+                handleFiles(files);
+            }
+        });
+        uploadZone.addEventListener('click', (e) => {
+            if (e.target === uploadZone || e.target.closest('.upload-icon') || e.target.closest('.upload-title')) {
+                fileInput.click();
+            }
+        });
+        fileInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            if (files.length > 0) {
+                handleFiles(files);
+            }
+        });
+        async function handleFiles(files) {
+            showProgress();
+            let loadedFiles = 0;
+            const startTime = Date.now();
+            for (const file of files) {
+                const formData = new FormData();
+                formData.append('image', file);
+                try {
+                    const res = await fetch('http://localhost:3000/upload', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'd24e80c32702e55a958ba59ffbc759ac'
+                        },
+                        body: formData
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        images.push({
+                            name: file.name,
+                            size: file.size,
+                            url: data.url
+                        });
+                        totalSize += file.size;
+                        showNotification('Uploaded: ' + file.name);
+                    } else {
+                        showNotification('Error: ' + (data.error || 'Unknown error'));
+                    }
+                } catch (err) {
+                    showNotification('Error: ' + err.message);
+                }
+                loadedFiles++;
+                updateProgress((loadedFiles / files.length) * 100);
+            }
+            const uploadTime = Date.now() - startTime;
+            hideProgress();
+            renderGallery();
+            updateStats(uploadTime);
+        }
+        // Particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+        createParticles();
+        // Initialize
+        updateStats();
+    </script>
+</body>
+</html>
