@@ -17,6 +17,9 @@ app.use(cors({
 app.use(express.json());
 app.use(express.static('/home/kishanx08/img-hosting'));
 
+console.log('Serving static from:', '/home/kishanx08/img-hosting');
+console.log('Current working directory:', process.cwd());
+
 // Authentication middleware
 const authenticate = (req, res, next) => {
   const secretKey = req.headers['authorization'];
