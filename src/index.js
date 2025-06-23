@@ -52,7 +52,7 @@ app.post('/upload', authenticate, upload.single('image'), async (req, res) => {
     console.log('Image uploaded:', req.file);
 
     // Generate image URL using custom domain or server address
-    const baseUrl = process.env.BASE_URL || `http://localhost:${port}`;
+    const baseUrl = process.env.BASE_URL || `http://kishan.x02.me:${port}`;
     const imageUrl = `${baseUrl}/uploads/${req.file.filename}`;
     res.json({
       success: true,
