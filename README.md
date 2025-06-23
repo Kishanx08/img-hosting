@@ -17,7 +17,7 @@ This is a simple image hosting API that can be used with ShareX for uploading im
    ```bash
    npm install
    ```
-3. Create a `.env` file based on `.env.example` and fill in your upload secret and (optionally) BASE_URL
+3. Create a `.env` file based on `.env.example` and fisudo systemctl reload nginxll in your upload secret and (optionally) BASE_URL
 4. Start the server:
    ```bash
    npm start
