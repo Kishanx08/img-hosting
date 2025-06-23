@@ -15,7 +15,7 @@ app.use(cors({
   allowedHeaders: ['Authorization', 'Content-Type']
 }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '..')));
+app.use(express.static('/home/kishanx08/img-hosting'));
 
 // Authentication middleware
 const authenticate = (req, res, next) => {
